@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Elf Post - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Domine', serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+
+        /* SNOWFLAKES */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(46, 128, 69, 0.6);
+            font-size: 1em;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% { top: -10px; opacity: 0.8; }
+            100% { top: 100vh; opacity: 0.2; }
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, #2e8045 0%, #245a33 100%);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 30%, rgba(255,255,255,0.1) 0%, transparent 50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero-logo {
+            max-width: 400px;
+            width: 90%;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .hero-tagline {
+            color: #ffffff;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .hero-subtagline {
+            color: rgba(255,255,255,0.95);
+            font-size: 20px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* PRODUCTS SECTION */
+        .products {
+            padding: 80px 20px;
+            background: #ffffff;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #2e8045;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 60px;
+        }
+
+        .products-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(46,128,69,0.3);
+            border-color: #2e8045;
+        }
+
+        .product-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .product-name {
+            color: #2e8045;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .product-features li {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2e8045;
+            font-weight: 700;
+        }
+
+        .price-container {
+            margin-bottom: 20px;
+        }
+
+        .price {
+            color: #d11414;
+            font-size: 36px;
+            font-weight: 700;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #8b0000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 10px;
+            animation: shine 2s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .buy-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: linear-gradient(135deg, #d11414 0%, #a01010 100%);
+            color: #ffffff;
+            border: 3px solid #8b0000;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Domine', serif;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 6px 20px rgba(209,20,20,0.3);
+        }
+
+        .buy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(209,20,20,0.5);
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+        }
+
+        .coming-soon-badge {
+            display: inline-block;
+            background: #6c757d;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #2e8045 0%, #245a33 100%);
+            color: #ffffff;
+        }
+
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .step-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+
+        .step-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .step-description {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.95;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 80px 20px;
+            background: #ffffff;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 5px solid #2e8045;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .faq-question {
+            color: #2e8045;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .faq-answer {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: linear-gradient(135deg, #1a5c2e 0%, #0f3d1e 100%);
+            color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-contact {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .footer-email {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .footer-email:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-tagline {
+                font-size: 24px;
+            }
+            .hero-subtagline {
+                font-size: 16px;
+            }
+            .section-title {
+                font-size: 32px;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Snowflakes -->
+    <div class="snowflakes" id="snowContainer"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="images/logo.png" alt="The Elf Post" class="hero-logo">
+            <h1 class="hero-tagline">Magical Personalised Messages from Santa & His Pals 🎅</h1>
+            <p class="hero-subtagline">Letters, Voicemails & Videos Straight from the North Pole!</p>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products">
+        <h2 class="section-title">🎁 Our Magical Products</h2>
+        <p class="section-subtitle">Choose your perfect Christmas surprise</p>
+        
+        <div class="products-grid">
+            <!-- Santa Voicemail -->
+            <div class="product-card">
+                <div class="product-icon">🎅📞</div>
+                <h3 class="product-name">Santa Voicemail</h3>
+                <p class="product-description">A personalised audio message from Santa himself, delivered with festive background music!</p>
+                
+                <ul class="product-features">
+                    <li>Fully personalised for your child</li>
+                    <li>Professional voice acting</li>
+                    <li>Festive background music</li>
+                    <li>Delivered within 24 hours</li>
+                    <li>High-quality MP3 download</li>
+                </ul>
+                
+                <div class="price-container">
+                    <div class="price">£19.99</div>
+                    <div class="discount-badge">✨ USE CODE: ELF30 for 30% OFF! ✨</div>
+                </div>
+                
+                <a href="https://theelfpost.gumroad.com/l/santa-voicemail" class="buy-button" target="_blank">
+                    Buy Now 🎄
+                </a>
+            </div>
+
+            <!-- Santa Letter - Coming Soon -->
+            <div class="product-card coming-soon">
+                <span class="coming-soon-badge">🔜 Coming Soon</span>
+                <div class="product-icon">📮💌</div>
+                <h3 class="product-name">Santa Letter</h3>
+                <p class="product-description">A beautifully personalised letter from Santa, perfect for framing!</p>
+                
+                <ul class="product-features">
+                    <li>Personalised content</li>
+                    <li>Official North Pole design</li>
+                    <li>High-quality print</li>
+                    <li>Arrives in festive envelope</li>
+                </ul>
+                
+                <div class="price-container">
+                    <div class="price" style="color: #6c757d;">Coming Soon</div>
+                </div>
+            </div>
+
+            <!-- Santa Video - Coming Soon -->
+            <div class="product-card coming-soon">
+                <span class="coming-soon-badge">🔜 Coming Soon</span>
+                <div class="product-icon">🎥🎅</div>
+                <h3 class="product-name">Santa Video Message</h3>
+                <p class="product-description">Watch Santa deliver a personalised video message just for your child!</p>
+                
+                <ul class="product-features">
+                    <li>Personalised video message</li>
+                    <li>Professional production</li>
+                    <li>HD quality</li>
+                    <li>Instant digital delivery</li>
+                </ul>
+                
+                <div class="price-container">
+                    <div class="price" style="color: #6c757d;">Coming Soon</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <h2 class="section-title" style="color: #ffffff;">✨ How It Works</h2>
+        <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Three simple steps to Christmas magic</p>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1️⃣</div>
+                <h3 class="step-title">Purchase</h3>
+                <p class="step-description">Choose your magical message and complete your order securely through Gumroad</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2️⃣</div>
+                <h3 class="step-title">Personalise</h3>
+                <p class="step-description">Fill in the special details about your child through our secure, festive form</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3️⃣</div>
+                <h3 class="step-title">Receive</h3>
+                <p class="step-description">Get your North Pole delivery within 24 hours straight to your inbox!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <h2 class="section-title">❓ Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know</p>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">📦 How long does delivery take?</div>
+                <div class="faq-answer">Your personalised Santa voicemail will be delivered within 24 hours of completing your personalisation form. Most orders arrive within a few hours!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">👨‍👩‍👧‍👦 Can I order for multiple children?</div>
+                <div class="faq-answer">Absolutely! Each voicemail is unique and personalised. Simply place separate orders for each child to ensure every message is completely tailored to them.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">🎂 What age is this suitable for?</div>
+                <div class="faq-answer">Our Santa voicemails are perfect for children aged 1-12. We personalise the tone and content to match your child's age for the most magical experience!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">👂 Can I preview before purchasing?</div>
+                <div class="faq-answer">While we can't provide previews (each message is 100% unique!), we guarantee your satisfaction. If you're not delighted with your voicemail, contact us and we'll make it right!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">🎵 What format will I receive?</div>
+                <div class="faq-answer">Your Santa voicemail arrives as a high-quality MP3 file with festive background music, perfect for playing on any device or sharing with family!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">🔒 Is my information secure?</div>
+                <div class="faq-answer">Yes! We use secure payment processing through Gumroad, and all personal information is handled with care. We never share your data with third parties.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">💝 Can I give this as a gift?</div>
+                <div class="faq-answer">Perfect for gifts! After purchase, you'll receive a link to complete the personalisation form. You can forward this to the recipient or fill it out yourself!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❓ What if I need help?</div>
+                <div class="faq-answer">Our North Pole support team is here to help! Email us at <a href="mailto:santa@theelfpost.com" style="color: #2e8045; font-weight: 600;">santa@theelfpost.com</a> and we'll respond as quickly as Santa's sleigh!</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-contact">
+            📧 Questions? Email: <a href="mailto:santa@theelfpost.com" class="footer-email">santa@theelfpost.com</a>
+        </div>
+        
+        <div class="footer-copyright">
+            🎅 © 2025 The Elf Post - Spreading Christmas Magic ✨
+        </div>
+    </footer>
+
+    <script>
+        // Create snowflakes
+        function createSnowflakes() {
+            const container = document.getElementById('snowContainer');
+            const snowflakeChars = ['❄', '❅', '❆'];
+            
+            for (let i = 0; i < 30; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+                container.appendChild(snowflake);
+            }
+        }
+
+        createSnowflakes();
+    </script>
+</body>
+</html>
