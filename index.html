@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Elf Post - Magical Messages from Santa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Domine', serif;
+            background: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* STICKY HEADER */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            box-shadow: 0 4px 20px rgba(46,128,69,0.15);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid rgba(46,128,69,0.1);
+        }
+
+        .header-logo {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 8px rgba(46,128,69,0.3));
+            transition: transform 0.3s ease;
+        }
+
+        .header-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* ENHANCED SNOWFLAKES */
+        .snowflakes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2em;
+            animation: fall linear infinite;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+        }
+
+        @keyframes fall {
+            0% { 
+                top: -10px; 
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% { 
+                top: 100vh; 
+                opacity: 0.3;
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+
+        /* SPARKLES */
+        .sparkle {
+            position: fixed;
+            color: #FFD700;
+            font-size: 1.5em;
+            animation: sparkleAnim 3s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes sparkleAnim {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0) rotate(0deg);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1) rotate(180deg);
+            }
+        }
+
+        /* HERO SECTION - NORTH POLE */
+        .hero {
+            margin-top: 80px;
+            height: 600px;
+            background: linear-gradient(135deg, #1a4d2e 0%, #2e8045 50%, #4a9d5f 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 30% 40%, rgba(255,255,255,0.3) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(255,215,0,0.2) 0%, transparent 50%);
+        }
+
+        /* Mountain silhouettes */
+        .mountains {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 300px;
+        }
+
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            width: 0;
+            height: 0;
+            border-left: 200px solid transparent;
+            border-right: 200px solid transparent;
+            border-bottom: 300px solid rgba(255,255,255,0.1);
+        }
+
+        .mountain:nth-child(1) {
+            left: -50px;
+            border-bottom-color: rgba(255,255,255,0.15);
+        }
+
+        .mountain:nth-child(2) {
+            left: 250px;
+            border-left-width: 250px;
+            border-right-width: 250px;
+            border-bottom-width: 350px;
+            border-bottom-color: rgba(255,255,255,0.2);
+        }
+
+        .mountain:nth-child(3) {
+            right: 100px;
+            border-bottom-color: rgba(255,255,255,0.12);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            animation: heroFadeIn 1.5s ease-out;
+        }
+
+        @keyframes heroFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            color: #ffffff;
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 
+                2px 2px 4px rgba(0,0,0,0.3),
+                0 0 20px rgba(255,215,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            color: rgba(255,255,255,0.95);
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 20px 60px;
+            background: linear-gradient(135deg, #d11414 0%, #8b0000 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 22px;
+            font-weight: 700;
+            border-radius: 50px;
+            border: 3px solid rgba(255,255,255,0.3);
+            box-shadow: 
+                0 10px 30px rgba(209,20,20,0.4),
+                0 0 20px rgba(255,215,0,0.3);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 
+                    0 10px 30px rgba(209,20,20,0.4),
+                    0 0 20px rgba(255,215,0,0.3);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 
+                    0 15px 40px rgba(209,20,20,0.6),
+                    0 0 30px rgba(255,215,0,0.5);
+            }
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-5px) scale(1.1) !important;
+            box-shadow: 
+                0 20px 50px rgba(209,20,20,0.6),
+                0 0 40px rgba(255,215,0,0.6) !important;
+        }
+
+        /* PRODUCTS SECTION */
+        .products {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+            position: relative;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #2e8045 0%, #1a4d2e 100%);
+            color: #ffffff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .section-title {
+            text-align: center;
+            background: linear-gradient(135deg, #2e8045 0%, #1a4d2e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 20px;
+            margin-bottom: 70px;
+            font-weight: 500;
+        }
+
+        .products-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+        }
+
+        .product-card {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 60px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(46,128,69,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(46,128,69,0.05) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 
+                0 30px 80px rgba(46,128,69,0.2),
+                0 0 0 2px rgba(46,128,69,0.3);
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #2e8045 0%, #245a33 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .product-image {
+            font-size: 120px;
+            z-index: 1;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        .product-content {
+            padding: 35px 30px;
+        }
+
+        .product-name {
+            background: linear-gradient(135deg, #2e8045 0%, #1a4d2e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: #555;
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .product-features li {
+            color: #444;
+            font-size: 15px;
+            margin-bottom: 12px;
+            padding-left: 30px;
+            position: relative;
+            line-height: 1.5;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #2e8045;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .price-section {
+            background: linear-gradient(135deg, #f0f8f4 0%, #e8f5ee 100%);
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(46,128,69,0.2);
+        }
+
+        .price {
+            color: #d11414;
+            font-size: 42px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .discount-badge {
+            display: block;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #8b0000;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 15px;
+            font-weight: 700;
+            text-align: center;
+            animation: shine 2s ease-in-out infinite;
+            box-shadow: 0 4px 15px rgba(255,215,0,0.4);
+        }
+
+        @keyframes shine {
+            0%, 100% { 
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.9;
+                transform: scale(1.05);
+            }
+        }
+
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #d11414 0%, #8b0000 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 15px;
+            font-size: 20px;
+            font-weight: 700;
+            font-family: 'Domine', serif;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(209,20,20,0.3);
+            cursor: pointer;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(209,20,20,0.5);
+            background: linear-gradient(135deg, #ff1a1a 0%, #a00000 100%);
+        }
+
+        .coming-soon-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 30px;
+        }
+
+        .coming-soon-badge {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+            color: #ffffff;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 24px;
+            font-weight: 700;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* HOW IT WORKS */
+        .how-it-works {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #2e8045 0%, #1a4d2e 100%);
+            color: #ffffff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .how-it-works::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255,215,0,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(255,255,255,0.05) 0%, transparent 50%);
+        }
+
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .step:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-10px) scale(1.03);
+            border-color: rgba(255,215,0,0.5);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .step:hover::before {
+            opacity: 1;
+        }
+
+        .step-number {
+            font-size: 72px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            filter: drop-shadow(0 2px 10px rgba(255,215,0,0.3));
+        }
+
+        .step-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .step-description {
+            font-size: 17px;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        /* FAQ */
+        .faq {
+            padding: 100px 20px;
+            background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%);
+        }
+
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            border-left: 5px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            border-left-color: #2e8045;
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(46,128,69,0.15);
+        }
+
+        .faq-question {
+            background: linear-gradient(135deg, #2e8045 0%, #1a4d2e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .faq-answer {
+            color: #555;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: linear-gradient(135deg, #1a4d2e 0%, #0f3d1e 100%);
+            color: #ffffff;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,215,0,0.05) 0%, transparent 70%);
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-logo {
+            height: 80px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .footer-contact {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .footer-email {
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .footer-email:hover {
+            color: #FFA500;
+            text-decoration: underline;
+        }
+
+        .footer-copyright {
+            font-size: 15px;
+            opacity: 0.8;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+            .hero-subtitle {
+                font-size: 18px;
+            }
+            .section-title {
+                font-size: 36px;
+            }
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .step-number {
+                font-size: 56px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- FIXED HEADER -->
+    <header class="header">
+        <img src="images/logo.png" alt="The Elf Post" class="header-logo">
+    </header>
+
+    <!-- SNOWFLAKES & SPARKLES -->
+    <div class="snowflakes" id="snowContainer"></div>
+    <div id="sparkleContainer"></div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="mountains">
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+            <div class="mountain"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Magical Messages from<br>Santa & the North Pole 🎅</h1>
+            <p class="hero-subtitle">Personalised Letters, Voicemails & Videos</p>
+            <a href="#products" class="hero-cta">Explore the Magic ✨</a>
+        </div>
+    </section>
+
+    <!-- PRODUCTS SECTION -->
+    <section class="products" id="products">
+        <div style="text-align: center;">
+            <span class="section-badge">🎁 Our Products</span>
+        </div>
+        <h2 class="section-title">Choose Your Christmas Magic</h2>
+        <p class="section-subtitle">Delivered straight from the North Pole</p>
+        
+        <div class="products-grid">
+            <!-- Santa Voicemail -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <div class="product-image">🎅🎙️</div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Santa Voicemail</h3>
+                    <p class="product-description">A personalised audio message from Santa himself, complete with festive background music and your child's name!</p>
+                    
+                    <ul class="product-features">
+                        <li>100% personalised for your child</li>
+                        <li>Professional Santa voice acting</li>
+                        <li>Festive Christmas background music</li>
+                        <li>Delivered within 24 hours</li>
+                        <li>High-quality MP3 download</li>
+                    </ul>
+                    
+                    <div class="price-section">
+                        <div class="price">£19.99</div>
+                        <span class="discount-badge">✨ USE CODE: ELFMAGIC30 for 30% OFF! ✨</span>
+                    </div>
+                    
+                    <a href="https://buy.stripe.com/4gM5kD6zE4411fffTj2Fa00" class="buy-button" target="_blank">
+                        Buy Now 🎄
+                    </a>
+                </div>
+            </div>
+
+            <!-- Santa Letter - Coming Soon -->
+            <div class="product-card" style="position: relative;">
+                <div class="product-image-container">
+                    <div class="product-image">📮💌</div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Santa Letter</h3>
+                    <p class="product-description">A beautifully personalised letter from Santa, printed on official North Pole stationery!</p>
+                    
+                    <ul class="product-features">
+                        <li>Personalised content for your child</li>
+                        <li>Official North Pole design</li>
+                        <li>High-quality premium paper</li>
+                        <li>Arrives in festive envelope</li>
+                        <li>Perfect for framing</li>
+                    </ul>
+                    
+                    <div class="price-section">
+                        <div class="price" style="color: #6c757d;">£TBC</div>
+                    </div>
+                </div>
+                <div class="coming-soon-overlay">
+                    <span class="coming-soon-badge">🔜 Coming Soon</span>
+                </div>
+            </div>
+
+            <!-- Santa Video - Coming Soon -->
+            <div class="product-card" style="position: relative;">
+                <div class="product-image-container">
+                    <div class="product-image">🎥🎅</div>
+                </div>
+                <div class="product-content">
+                    <h3 class="product-name">Santa Video Message</h3>
+                    <p class="product-description">Watch Santa deliver a personalised video message directly to your child!</p>
+                    
+                    <ul class="product-features">
+                        <li>Personalised video from Santa</li>
+                        <li>Professional video production</li>
+                        <li>HD quality recording</li>
+                        <li>Instant digital delivery</li>
+                        <li>Share with family & friends</li>
+                    </ul>
+                    
+                    <div class="price-section">
+                        <div class="price" style="color: #6c757d;">£TBC</div>
+                    </div>
+                </div>
+                <div class="coming-soon-overlay">
+                    <span class="coming-soon-badge">🔜 Coming Soon</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works">
+        <div style="text-align: center;">
+            <span class="section-badge" style="background: rgba(255,255,255,0.2);">✨ The Process</span>
+        </div>
+        <h2 class="section-title" style="color: #ffffff; -webkit-text-fill-color: #ffffff;">How It Works</h2>
+        <p class="section-subtitle" style="color: rgba(255,255,255,0.9);">Three simple steps to Christmas magic</p>
+        
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Purchase</h3>
+                <p class="step-description">Choose your magical message and complete your secure checkout</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Personalise</h3>
+                <p class="step-description">Fill in the special details about your child through our festive form</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Receive</h3>
+                <p class="step-description">Get your North Pole delivery within 24 hours straight to your inbox!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq">
+        <div style="text-align: center;">
+            <span class="section-badge">❓ FAQ</span>
+        </div>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Everything you need to know</p>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">📦 How long does delivery take?</div>
+                <div class="faq-answer">Your personalised Santa voicemail will be delivered within 24 hours of completing your personalisation form. Most orders arrive within a few hours!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">👨‍👩‍👧‍👦 Can I order for multiple children?</div>
+                <div class="faq-answer">Absolutely! Each voicemail is unique and personalised. Simply place separate orders for each child to ensure every message is completely tailored to them.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">🎂 What age is this suitable for?</div>
+                <div class="faq-answer">Our Santa voicemails are perfect for children aged 1-12. We personalise the tone and content to match your child's age for the most magical experience!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">👂 Can I preview before purchasing?</div>
+                <div class="faq-answer">While we can't provide previews (each message is 100% unique!), we guarantee your satisfaction. If you're not delighted with your voicemail, contact us and we'll make it right!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">🎵 What format will I receive?</div>
+                <div class="faq-answer">Your Santa voicemail arrives as a high-quality MP3 file with festive background music, perfect for playing on any device or sharing with family!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">🔒 Is my information secure?</div>
+                <div class="faq-answer">Yes! We use secure payment processing, and all personal information is handled with care. We never share your data with third parties.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">💝 Can I give this as a gift?</div>
+                <div class="faq-answer">Perfect for gifts! After purchase, you'll receive a link to complete the personalisation form. You can forward this to the recipient or fill it out yourself!</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">❓ What if I need help?</div>
+                <div class="faq-answer">Our North Pole support team is here to help! Email us at <a href="mailto:santa@theelfpost.com" style="color: #2e8045; font-weight: 700;">santa@theelfpost.com</a> and we'll respond as quickly as Santa's sleigh!</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <img src="images/logo.png" alt="The Elf Post" class="footer-logo">
+            <div class="footer-contact">
+                📧 Questions? Email: <a href="mailto:santa@theelfpost.com" class="footer-email">santa@theelfpost.com</a>
+            </div>
+            <div class="footer-copyright">
+                🎅 © 2025 The Elf Post - Spreading Christmas Magic Around the World ✨
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Enhanced snowflakes
+        function createSnowflakes() {
+            const container = document.getElementById('snowContainer');
+            const snowflakeChars = ['❄', '❅', '❆', '✨'];
+            
+            for (let i = 0; i < 40; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                snowflake.style.animationDelay = Math.random() * 5 + 's';
+                snowflake.style.fontSize = (Math.random() * 15 + 12) + 'px';
+                container.appendChild(snowflake);
+            }
+        }
+
+        // Random sparkles
+        function createSparkle() {
+            const container = document.getElementById('sparkleContainer');
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.textContent = '✨';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            container.appendChild(sparkle);
+            
+            setTimeout(() => sparkle.remove(), 3000);
+        }
+
+        // Smooth scroll for hero CTA
+        document.querySelector('.hero-cta').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('#products').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        });
+
+        // Initialize
+        createSnowflakes();
+        setInterval(createSparkle, 2000);
+    </script>
+</body>
+</html>
